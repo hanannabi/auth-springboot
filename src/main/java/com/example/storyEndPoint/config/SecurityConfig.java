@@ -35,6 +35,7 @@ public class SecurityConfig {
                         .requestMatchers("/add/program").hasAuthority(Permissions.READ_NOTE.name())
                         .requestMatchers("/programs/*/notes/add").hasAuthority(Permissions.ADD_NOTE.name())
                         .requestMatchers("/programs/*/notes").permitAll()
+                        .requestMatchers("/swagger-ui/**","/v3/api-docs/**").permitAll()
 //                        .requestMatchers("/user/admin/create")
 //                        .requestMatchers("/user/admin/create").authenticated()
                         .anyRequest().authenticated());
