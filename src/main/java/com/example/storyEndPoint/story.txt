@@ -1,0 +1,122 @@
+## 📌 Story: Add Program Notes via Admin-only POST API
+
+### **Purpose**
+Create a **backend-only** API endpoint that allows **Admins** to add notes to a specific program. These notes should be stored in the database and returned to the client for immediate use, such as displaying a note history.
+
+---
+
+### **Scope**
+- This story focuses **only on backend development**.
+- Includes:
+  - A new protected `POST` endpoint.
+  - Input validation.
+  - Data persistence using existing JSONB structure.
+  - Response formatting.
+- Excludes: any frontend or UI work.
+
+---
+
+### **API Endpoint Specification**
+
+- **Method**: `POST`
+- **Path**: `/api/programs/{programId}/notes`
+- **Access**: Admins only (role-based access control)
+- **Request Body**:
+    ```json
+    {
+      "noteText": "Your note here",
+      "isPinned": false
+    }
+    ```
+- **Success Response (201 Created)**:
+    ```json
+    {
+      "id": "550e8400-e29b-41d4-a716-446655440000",
+      "comment": "Your note here",
+      "isPinned": false,
+      "updatedAt": "2025-10-04T12:45:00Z",
+      "updatedBy": "Jane Admin"
+    }
+    ```
+
+---
+
+### **Validations & Error Handling**
+
+| Condition | Response Code | Message |
+|----------|---------------|---------|
+| `noteText` is empty or null | `400 Bad Request` | `"NoteText cannot be empty."` |
+| `noteText` exceeds 255 characters | `400 Bad Request` | `"NoteText exceeds maximum length of 255 characters."` |
+| Request made by non-admin user | `403 Forbidden` | `"Access denied."` |
+| Program with `{programId}` not found | `404 Not Found` | `"Program not found."` |
+
+---
+
+### **Scenarios**
+
+1. ✅ **Successful Note Creation**
+   - **Given**: I am an authenticated Admin
+   - **When**: I send a valid note
+   - **Then**: I receive `201 Created` and the new note object is returned
+
+2. 🚫 **Permission Denied**
+   - **Given**: I am **not** an Admin
+   - **When**: I try to submit a note
+   - **Then**: I receive `403 Forbidden`
+
+3. ⚠️ **Invalid Input**
+   - **Given**: I am an Admin
+   - **When**: I submit an empty or too-long `noteText`
+   - **Then**: I receive `400 Bad Request` with an appropriate error message
+
+---
+
+### **Database Design**
+
+**Table**: `program_notes`
+```sql
+CREATE TABLE program_notes (
+    id BIGINT PRIMARY KEY,
+    page_id BIGINT NOT NULL,
+    program_notes JSONB NOT NULL DEFAULT '{"programNotes": []}'
+);
+```
+
+- Notes are stored as a **JSONB array** under `program_notes`, enabling versioned history per program.
+
+---
+
+### **Note Object Structure**
+
+```java
+public record ProgramNotes(
+    String id,             // UUID
+    String comment,        // Note content
+    Boolean isPinned,      // Optional pinning flag
+    Instant updatedAt,     // Timestamp of creation
+    String updatedBy       // Extracted from Okta session
+) {
+    public ProgramNotes(String comment, Boolean isPinned, Instant updatedAt, String updatedBy) {
+        this(UUID.randomUUID().toString(), comment, isPinned, updatedAt, updatedBy);
+    }
+}
+```
+
+---
+
+### **JPA Mapping**
+
+```java
+@Entity
+public class ProgramNotesEntity {
+
+    @Id
+    private Long id;
+
+    @Column(name = "page_id")
+    private Long pageId;
+
+    @Column(name = "program_notes", columnDefinition = "jsonb")
+    private List<ProgramNotes> programNotes;
+}
+```
