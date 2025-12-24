@@ -1,0 +1,206 @@
+{
+	"info": {
+		"_postman_id": "f2ec0380-15a8-47d1-99c0-b3c0cef1effa",
+		"name": "Spring Security Architecture",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39788075"
+	},
+	"item": [
+		{
+			"name": "addProgram",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaG9uIiwiaWF0IjoxNzU5ODQ3OTYyLCJleHAiOjE3NTk4NTE1NjJ9.9TkCEHg6_tYSp3hObF4-nD1x0yZpaWHWsN8nBr99OWw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"amazonnnsseslo\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/add/program",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"add",
+						"program"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add program note",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqaG9uIiwiaWF0IjoxNzU5ODQ4MjUwLCJleHAiOjE3NTk4NTE4NTB9.3MbaDuig35997aj-Ra6WSWBxv496qNj4CLk3wzzaCbo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"noteText\": \"hellooo pin my comment\",\r\n    \"isPinned\":\"true\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/add/programs/2/notes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"add",
+						"programs",
+						"2",
+						"notes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "userRegister",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJodW1hbiIsImlhdCI6MTc1OTc2NTk4MCwiZXhwIjoxNzU5NzY5NTgwfQ.msYAQYwYRg5f_yIEPOPaLjsPwlAIr6XSwluJGqRQxek",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"mark\",\r\n    \"password\":\"mark1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "authenticate",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"mark\",\r\n    \"password\":\"mark1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/home/authenticate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"home",
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "adimCanAdd",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJtYXJrIiwiaWF0IjoxNzU5NzY2MTIwLCJleHAiOjE3NTk3Njk3MjB9.L-ebHrRshTQGiJXBtPV7G4p4QceQMFcJqPaoqVymOJU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"jhon\",\r\n    \"password\": \"jhon1234\",\r\n    \"role\": \"ADMIN\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/user/admin/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"user",
+						"admin",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllNotes",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
